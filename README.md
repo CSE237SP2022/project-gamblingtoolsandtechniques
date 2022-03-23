@@ -1,5 +1,5 @@
 # Gambling Tools and Techniques
-A Java-based collection of casino games. Final group project for WUSTL CSE237 (Spring 22). 
+A Java-based collection of casino games. Final group project for WUSTL CSE237 (Spring '22). 
 
 ## Overview
 This is a simple Java program accessible by the command line. Users begin by compiling and running a single "Main" class that functions as a text interface from which they can select a playable casino game. 
@@ -15,7 +15,7 @@ git clone https://github.com/freret/casino-237.git
 3. Make sure I didn't screw something up:
     1. Compile the `HelloWorld` class
     ```
-    javac ./init/HelloWorld
+    javac ./init/HelloWorld.java
     ```
     2. Run the `HelloWorld` class
     ```

@@ -4,10 +4,6 @@ import java.util.Scanner;
 
 public class MainMenu {
 	
-	public static int asdf() {
-		return 1;
-	}
-	
 	/*
 	 * Prints a welcome message. Should be triggered when user opens casino
 	 * 
@@ -59,7 +55,7 @@ public class MainMenu {
 	/*
 	 * Gets the next valid integer from user input
 	 */
-	static int getIntInput(Scanner s) {
+	public static int getIntInput(Scanner s) {
 		// if the entry is not an integer
 		while (! s.hasNextInt()) {
 			// notify the user and flush the scanner
@@ -70,6 +66,12 @@ public class MainMenu {
 		return s.nextInt();
 	}
 
+	/*
+	 * Main method for the casino program
+	 * TODO: separate into more methods
+	 * 
+	 * @return <i>None</i>
+	 */
 	public static void main(String[] args) {
 		
 		Scanner in = new Scanner(System.in);

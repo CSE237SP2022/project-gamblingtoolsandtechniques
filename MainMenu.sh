@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # intro messages
-echo "Welcome to the Casino, please select a game: Slots, War, or Blackjack"
+echo "Welcome to the Casino! Are you ready to play? [y/n]"
 
 # read user input
-read G
+read A
 
 # compile and run java class for selected game
-while ! [[ -f "$G.java" ]];
+while [[ "A" == "y" ]];
 do
-	echo "Please select a game: Slots, War, or Blackjack"
-	read G
+	echo "Are you ready to play?"
+	read A
 done
 
-javac $G.java
-java $G
+javac MainMenu.java
+java MainMenu
 
 echo "Goodluck!"	

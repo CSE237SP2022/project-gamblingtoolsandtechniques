@@ -40,5 +40,5 @@ git clone https://github.com/freret/casino-237.git
 In this iteration, we created a MainMenu shell script for the initial user experience from the command line. This file welcomes the user to the casino, compiles and runs the MainMenu Java class that allows the user to choose and play a game. 
 We also implemented the Slots game in a Java class. The game works and passes all written tests. 
 Next iteration, we are planning to add Java classes for War and Blackjack along with tests for each. In the MainMenu Java class, we will ensure the user can begin playing a game and switch to a new game. 
-Our shell script has been implemented as we intended, but there is a class path issue that we are working through, so it does not work completly yet. 
+Our shell script has been implemented as we intended, but there is a class path issue that we are working through, so it does not work completly yet. UPDATE: classpath issue partially resolved; run per instructions above and please let us know if you have questions.  
 In our MainMenu.sh script, we use the javac and java commands to compile and run MainMenu.java that contains options for the three games in our casino. We also used a while loop in the shell script to continuously ask the user if they are ready to play until they respond with "y". 

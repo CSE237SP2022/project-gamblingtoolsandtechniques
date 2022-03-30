@@ -13,7 +13,8 @@ do
 	read A
 done
 
-javac MainMenu.java
-java MainMenu
+echo "Good luck!"
 
-echo "Goodluck!"	
+cd ./src
+javac ./main/MainMenu.java
+java main.MainMenu

@@ -1,3 +1,6 @@
+# for consistency across branches, hopefully?
+init/
+
 # Compiled class file
 *.class
 

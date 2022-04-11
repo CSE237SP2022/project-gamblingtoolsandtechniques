@@ -42,3 +42,9 @@ We also implemented the Slots game in a Java class. The game works and passes al
 Next iteration, we are planning to add Java classes for War and Blackjack along with tests for each. In the MainMenu Java class, we will ensure the user can begin playing a game and switch to a new game. 
 Our shell script has been implemented as we intended, but there is a class path issue that we are working through, so it does not work completly yet. UPDATE: classpath issue partially resolved; run per instructions above and please let us know if you have questions.  
 In our MainMenu.sh script, we use the javac and java commands to compile and run MainMenu.java that contains options for the three games in our casino. We also used a while loop in the shell script to continuously ask the user if they are ready to play until they respond with "y". 
+
+## Questions for Iteration 2
+In the second iteration, we added two more games to the Casino: war and blackjack as independent Java classes. We also created tests for the methods in each class to ensure the game is still functional for various outcomes and game scenarios. 
+Another new aspect of our iteration is that the user can purchase chips and place wagers on the game they are playing. 
+The MainMenu Java class now allows the user to switch between games??? 
+The final iteration will likely consist of adding more tests for each of the games and implementing clean code rules to ensure our methods are concise and easy to follow. 

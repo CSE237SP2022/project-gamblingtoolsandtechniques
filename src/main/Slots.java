@@ -26,19 +26,17 @@ public class Slots {
 		return numWins;
 	}
 
-	public void initiate() {
-		Scanner scan = new Scanner(System.in);
+	public void initiate(Scanner s) {
 		int input = 0;
 		while (input >= 0) {
 			System.out.println("Plays: " + numPlays + " Wins: " + numWins + " Credits: " + credits);
-			System.out.println("Play slots? (enter number of times to play, -1 for quit)");
-		    input = scan.nextInt();
+			System.out.println("How many times would you like to play? (or enter -1 to quit)");
+		    input = s.nextInt();
 		    for(int i=0; i<input; i++) {
 		    	this.play();
 		    }
 		}
 	    System.out.println("Bye");
-	    scan.close();
 	}
 	
 	public void play() {
@@ -92,7 +90,9 @@ public class Slots {
 
 	public static void main(String[] args) {
 		Slots slots = new Slots();
-		slots.initiate();
+		Scanner scan = new Scanner(System.in);
+		slots.initiate(scan);
+		scan.close();
 	}
 
 }

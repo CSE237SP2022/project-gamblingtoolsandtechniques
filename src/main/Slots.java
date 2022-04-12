@@ -27,7 +27,6 @@ public class Slots {
 	}
 
 	public void initiate(Scanner s) {
-//		Scanner scan = new Scanner(System.in);
 		int input = 0;
 		while (input >= 0) {
 			this.printStartMessages();
@@ -44,7 +43,6 @@ public class Slots {
 		    	this.play();
 		    }
 		}
-//		scan.close();
 	    System.out.println("Bye");
 	}
 

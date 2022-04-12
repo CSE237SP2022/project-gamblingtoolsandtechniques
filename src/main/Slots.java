@@ -26,16 +26,15 @@ public class Slots {
 		return numWins;
 	}
 
-	public void initiate() {
-		Scanner scan = new Scanner(System.in);
+	public void initiate(Scanner s) {
 		int input = 0;
 		while (input >= 0) {
 			this.printStartMessages();
 			try {
-				input = scan.nextInt();
+				input = s.nextInt();
 			}
 			catch (Exception e){
-				input = nonNumberInputProtocol(scan);
+				input = nonNumberInputProtocol(s);
 			}
 			if(input < -1) {
 				input = inputNegativeProtocol();
@@ -44,7 +43,6 @@ public class Slots {
 		    	this.play();
 		    }
 		}
-		scan.close();
 	    System.out.println("Bye");
 	}
 
@@ -124,7 +122,9 @@ public class Slots {
 
 	public static void main(String[] args) {
 		Slots slots = new Slots();
-		slots.initiate();
+		Scanner scan = new Scanner(System.in);
+		slots.initiate(scan);
+		scan.close();
 	}
 
 }

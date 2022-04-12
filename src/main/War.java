@@ -23,6 +23,13 @@ public class War {
 		this(1);
 	}
 	
+	public String getState() {
+		String out = "Your cards: " + humanCards + "\n";
+		out += "Opponent cards: " + cpuCards + "\n";
+		
+		return out;
+	}
+	
 	
 
 }

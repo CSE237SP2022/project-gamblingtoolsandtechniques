@@ -30,27 +30,50 @@ public class Slots {
 		Scanner scan = new Scanner(System.in);
 		int input = 0;
 		while (input >= 0) {
-			System.out.println("Plays: " + numPlays + " Wins: " + numWins + " Credits: " + credits);
-			System.out.println("Play slots? (enter number of times to play, -1 for quit)");
-		    input = scan.nextInt();
-		    for(int i=0; i<input; i++) {
+			this.printStartMessages();
+			try {
+				input = scan.nextInt();
+			}
+			catch (Exception e){
+				input = nonNumberInputProtocol(scan);
+			}
+			if(input < -1) {
+				input = inputNegativeProtocol();
+			}
+			for(int i=0; i<input; i++) {
 		    	this.play();
 		    }
 		}
+		scan.close();
 	    System.out.println("Bye");
-	    scan.close();
+	}
+
+	private int inputNegativeProtocol() {
+		int input = 0;
+		System.out.println("Please enter a number to play, or -1 to quit");
+		return input;
+	}
+
+	public int nonNumberInputProtocol(Scanner scan) {
+		int input = 0;
+		if (scan.hasNext()) scan.next();
+		if(scan.hasNextLine()) scan.nextLine();
+		System.out.println("Please enter a number");
+		return input;
+	}
+
+	private void printStartMessages() {
+		System.out.println("Plays: " + numPlays + " Wins: " + numWins + " Credits: " + credits);
+		System.out.println("Play slots? (enter number of times to play, -1 for quit)");
 	}
 	
 	public void play() {
 		if(this.hasEnoughCredits()) {
-			credits--;
-			numPlays++;
+			this.initialStatsUpdate();
 			int[] slotsNumbers = this.generateNumbers();
 			this.printNumbers(slotsNumbers);
 			if(checkIfWin(slotsNumbers)) {
-				credits += 10;
-				numWins++;
-				System.out.println("Congrats! You win!\n");
+				this.winProtocol();
 			}
 			else {
 				System.out.println("You lose :(\n");
@@ -84,11 +107,20 @@ public class Slots {
 		}
 	}
 	
+	public void initialStatsUpdate() {
+		credits--;
+		numPlays++;
+	}
+	
 	public static boolean checkIfWin(int[] slotsNumbers) {
 		return (slotsNumbers[0] == slotsNumbers[1] && slotsNumbers[1] == slotsNumbers[2]);
 	}
 	
-	
+	public void winProtocol() {
+		credits += 10;
+		numWins++;
+		System.out.println("Congrats! You win!\n");
+	}
 
 	public static void main(String[] args) {
 		Slots slots = new Slots();

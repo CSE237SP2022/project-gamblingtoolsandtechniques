@@ -12,11 +12,16 @@ public class Blackjack {
 	private int dealerTotal;
 	private int dealerShow;
 	private int playerTotal;
+	private int wager;
 	
 	public Blackjack(int initialCredits) {
 		credits = initialCredits;
 		rounds = 0;
 		wins = 0;
+		dealerTotal = 0;
+		dealerShow = 0;
+		playerTotal = 0;
+		wager = -1;
 	}
 	
 	public int getCredits() {
@@ -43,6 +48,19 @@ public class Blackjack {
 		return this.playerTotal;
 	}
 	
+	public void setDealerTotal(int dealerTotal) {
+		this.dealerTotal = dealerTotal;
+	}
+	
+	public void setPlayerTotal(int playerTotal) {
+		this.playerTotal = playerTotal;
+	}
+	
+	public int getWager() {
+		return this.wager;
+	}
+	
+
 	
 	// TODO: doesn't handle case where dealer busts
 	// TODO: redistribute to smaller methods
@@ -80,16 +98,16 @@ public class Blackjack {
 			}
 		}
 		int winState = 0;
-		if(this.hasEnoughCredits(wager)) {
+		if(this.hasEnoughCredits(this.wager)) {
 			this.rounds++;
 			winState = this.round(scan);
 			if(winState == 1) {
-				this.credits += wager;
+				this.credits += this.wager;
 				this.wins++;
 				System.out.println("You win! You double your wager.\n");
 			}
 			else if(winState == 2) {
-				this.credits -= wager;
+				this.credits -= this.wager;
 				System.out.println("You bust. You lose your wager.\n");
 			}
 			else {
@@ -103,17 +121,28 @@ public class Blackjack {
 		}
 	}
 	
+	public int setWager() {
+		int wager = -1;
+		System.out.println("How much would you like to wager this round?");
+		while(wager < 0) {
+			try{
+				Scanner scan = new Scanner(System.in);
+				wager = scan.nextInt();
+			}
+			catch(InputMismatchException e) {
+				wager = -1;
+			}
+			if(wager < 0) {
+				System.out.println("Please enter a positive integer.");
+			}
+		}
+		return wager;
+	}
+
 	public int round(Scanner scan) {
 		boolean gameOver = false;
 		int winState = 0;
-		this.playerTotal = 0;
-		this.dealerTotal = 0;
-		this.dealerShow = 0;
-		System.out.println("\nRound " + this.getRounds() + " start:\n");
-		this.addDealerCard();
-		this.addPlayerCard();
-		this.addDealerCard();
-		this.addPlayerCard();
+		this.roundSetup();
 		scan = new Scanner(System.in);
 		String choice = "";
 		while(!gameOver) {
@@ -138,6 +167,9 @@ public class Blackjack {
 			    	if(playerTotal > dealerTotal && playerTotal <= 21) {
 			    		winState = 1;
 			    	}
+			    	else if(playerTotal <= 21 && dealerTotal > 21) {
+			    		winState = 1;
+			    	}
 			    	else if(playerTotal < dealerTotal) {
 			    		winState = 2;
 			    	}
@@ -146,6 +178,17 @@ public class Blackjack {
 			}
 		}
 		return winState;
+	}
+	
+	public void roundSetup() {
+		this.playerTotal = 0;
+		this.dealerTotal = 0;
+		this.dealerShow = 0;
+		System.out.println("\nRound " + this.getRounds() + " start:\n");
+		this.addDealerCard();
+		this.addPlayerCard();
+		this.addDealerCard();
+		this.addPlayerCard();
 	}
 	
 	public void addDealerCard() {

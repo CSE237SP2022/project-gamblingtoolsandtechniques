@@ -43,6 +43,8 @@ public class Blackjack {
 		return this.playerTotal;
 	}
 	
+	
+	// TODO: doesn't handle case where dealer busts
 	// TODO: redistribute to smaller methods
 	// TODO: choose whether ace is high?
 	// TODO: use card and deck class for fun?
@@ -53,8 +55,8 @@ public class Blackjack {
 			System.out.println("Rounds: " + getRounds() + " Wins: " + getWins() + " Credits: " + getCredits());
 			this.play(scan);
 			System.out.println("Would you like to play another round of blackjack? (y/n)");
+			scan = new Scanner(System.in);
 		    input = scan.nextLine();
-		    //scan2.close();
 		    if(!input.equals("y")) {
 		    	input = "n";
 		    }

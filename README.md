@@ -37,6 +37,7 @@ git clone https://github.com/freret/casino-237.git
 3. Select a game...
 
 ## Questions for Iteration 1
+
 In this iteration, we created a MainMenu shell script for the initial user experience from the command line. This file welcomes the user to the casino, compiles and runs the MainMenu Java class that allows the user to choose and play a game. 
 We also implemented the Slots game in a Java class. The game works and passes all written tests. 
 Next iteration, we are planning to add Java classes for War and Blackjack along with tests for each. In the MainMenu Java class, we will ensure the user can begin playing a game and switch to a new game. 
@@ -44,18 +45,20 @@ Our shell script has been implemented as we intended, but there is a class path 
 In our MainMenu.sh script, we use the javac and java commands to compile and run MainMenu.java that contains options for the three games in our casino. We also used a while loop in the shell script to continuously ask the user if they are ready to play until they respond with "y". 
 
 ## Questions for Iteration 2
+
 In the second iteration, we added blackjack to the casino as an independent Java class. We also created tests for the methods to ensure the game is still functional for various outcomes and game scenarios.
 We also reduced the size of the slots methods "initiate" and "play" and added more tests to cover the functionality of the game.
 Another new aspect of our iteration is that the user can place wagers on the game they are playing. 
 The MainMenu Java class now allows the user to switch between games.
+
 User stories completed:
-=
 - The user should be able to play blackjack.
 - The user should be able to place wagers on the game they are playing.
 - The user should be able to switch between games.
+
 The final iteration will likely consist of adding War, more tests for each of the games and implementing clean code rules to ensure our methods are concise and easy to follow. We will also add the ability to buy more credits from the main menu as well as within each game. We will also include a "how to play" message at the beginning of each game.
+
 User stories to complete for next iteration:
-=
 - The user should be able to play war.
 - The user should be able to buy credits from the main menu.
 - The user should be able to buy credits from within the game.

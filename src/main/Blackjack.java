@@ -60,18 +60,21 @@ public class Blackjack {
 		return this.wager;
 	}
 	
-	public void setup() {
-		Scanner scan = new Scanner(System.in);
-		String input = "";
-		System.out.println("Would you like to play blackjack? (y/n)");
-		input = scan.nextLine();
-		//scan.close();
+
+	
+	// TODO: doesn't handle case where dealer busts
+	// TODO: redistribute to smaller methods
+	// TODO: choose whether ace is high?
+	// TODO: use card and deck class for fun?
+	
+	public void setup(Scanner scan) {
+		String input = "y";
 		while (input.equals("y")) {
 			System.out.println("Rounds: " + getRounds() + " Wins: " + getWins() + " Credits: " + getCredits());
-			this.play();
+			this.play(scan);
 			System.out.println("Would you like to play another round of blackjack? (y/n)");
+			scan = new Scanner(System.in);
 		    input = scan.nextLine();
-		    //scan2.close();
 		    if(!input.equals("y")) {
 		    	input = "n";
 		    }
@@ -79,12 +82,25 @@ public class Blackjack {
 	    System.out.println("End of game");
 	}
 	
-	public void play() {
-		this.wager = this.setWager();
+	public void play(Scanner scan) {
+		int wager = -1;
+		System.out.println("How much would you like to wager this round?");
+		while(wager < 0) {
+			try{
+				scan = new Scanner(System.in);
+				wager = scan.nextInt();
+			}
+			catch(InputMismatchException e) {
+				wager = -1;
+			}
+			if(wager < 0) {
+				System.out.println("Please enter a positive integer.");
+			}
+		}
 		int winState = 0;
 		if(this.hasEnoughCredits(this.wager)) {
 			this.rounds++;
-			winState = this.round();
+			winState = this.round(scan);
 			if(winState == 1) {
 				this.credits += this.wager;
 				this.wins++;
@@ -101,9 +117,8 @@ public class Blackjack {
 		}
 		else {
 			System.out.println("You can't wager more than you have.");
-			this.play();
+			this.play(scan);
 		}
-		//scan.close();
 	}
 	
 	public int setWager() {
@@ -123,12 +138,12 @@ public class Blackjack {
 		}
 		return wager;
 	}
-	
-	public int round() {
+
+	public int round(Scanner scan) {
 		boolean gameOver = false;
 		int winState = 0;
 		this.roundSetup();
-		Scanner scan = new Scanner(System.in);
+		scan = new Scanner(System.in);
 		String choice = "";
 		while(!gameOver) {
 			if(playerTotal > 21) {
@@ -162,7 +177,6 @@ public class Blackjack {
 			    }
 			}
 		}
-		//scan.close();
 		return winState;
 	}
 	
@@ -225,7 +239,9 @@ public class Blackjack {
 
 	public static void main(String[] args) {
 		Blackjack blackjack = new Blackjack(50);
-		blackjack.setup();
+		Scanner scan = new Scanner(System.in);
+		blackjack.setup(scan);
+		scan.close();
 	}
 	
 }

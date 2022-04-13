@@ -138,7 +138,9 @@ public class MainMenu {
 					// TODO: trigger war module
 					break;
 				case 3:
-					// TODO: trigger blackjack module
+					Blackjack b = new Blackjack(50);
+					b.setup(in);
+					input = 0;
 					break;
 				case 4:
 					// go back to main menu

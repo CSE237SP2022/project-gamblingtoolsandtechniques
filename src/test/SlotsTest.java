@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Scanner;
+
 import org.junit.jupiter.api.Test;
 
 import main.Slots;
@@ -9,15 +11,26 @@ import main.Slots;
 class SlotsTest {
 
 	@Test
-	void testConstructor() {
+	void testGetCredits() {
 		Slots slots = new Slots();
-		
 		int credits = slots.getCredits();
-		int plays = slots.getNumPlays();
-		int wins = slots.getNumWins();
 		
 		assertEquals(50, credits);
+	}
+	
+	@Test
+	void testGetNumPlays() {
+		Slots slots = new Slots();
+		int plays = slots.getNumPlays();
+		
 		assertEquals(0, plays);
+	}
+	
+	@Test
+	void testGetNumWins() {
+		Slots slots = new Slots();
+		int wins = slots.getNumWins();
+		
 		assertEquals(0, wins);
 	}
 	
@@ -31,6 +44,38 @@ class SlotsTest {
 	}
 	
 	@Test
+	void testGenerateNumbers() {
+		Slots slots = new Slots();
+		
+		int[] numbers = slots.generateNumbers();
+		
+		assertEquals(3, numbers.length);
+		assertEquals(true, (numbers[0] >= 0 && numbers[0] <= 4));
+		assertEquals(true, (numbers[1] >= 0 && numbers[0] <= 4));
+		assertEquals(true, (numbers[2] >= 0 && numbers[0] <= 4));
+	}
+	
+	@Test
+	void testInitialStatsUpdate() {
+		Slots slots = new Slots();
+		
+		slots.initialStatsUpdate();
+		
+		assertEquals(49, slots.getCredits());
+		assertEquals(1, slots.getNumPlays());
+	}
+	
+	@Test
+	void testNonNumberInputProtocol() {
+		Scanner scan = new Scanner(System.in);
+		Slots slots = new Slots();
+		
+		System.out.println("enter a string");
+		int number = slots.nonNumberInputProtocol(scan);
+		assertEquals(0, number);
+	}
+	
+	@Test
 	void testCheckIfWin() {
 		int[] winningHand = {4, 4, 4};
 		int[] losingHand = {1, 2, 2};
@@ -40,6 +85,17 @@ class SlotsTest {
 		
 		assertEquals(true, areEqual);
 		assertEquals(false, arentEqual);
+	}
+	
+	@Test
+	void testWinProtocol() {
+		Slots slots = new Slots();
+		
+		slots.winProtocol();
+		
+		assertEquals(60, slots.getCredits());
+		assertEquals(1, slots.getNumWins());
+		
 	}
 	
 	@Test

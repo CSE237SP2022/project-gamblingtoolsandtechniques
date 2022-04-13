@@ -1,10 +1,12 @@
 package main;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
 	
-	/*
+	/**
 	 * Prints a welcome message. Should be triggered when user opens casino
 	 * 
 	 * @return <i>None</i>
@@ -13,7 +15,7 @@ public class MainMenu {
 		System.out.println("Welcome to the 237 Casino! Please select an option from the list");
 	}
 	
-	/*
+	/**
 	 * Prints main menu options
 	 * 
 	 * @return <i>None</i>
@@ -24,7 +26,7 @@ public class MainMenu {
 		System.out.println("3 - Exit");
 	}
 	
-	/*
+	/**
 	 * Prints game choices
 	 * 
 	 * @return <i>None</i>
@@ -36,7 +38,7 @@ public class MainMenu {
 		System.out.println("4 - Go back");
 	}
 	
-	/*
+	/**
 	 * Prints an "invalid selection" message
 	 * 
 	 * @return: <i>None</i>
@@ -45,36 +47,37 @@ public class MainMenu {
 		System.out.println("Invalid option; please select from the following menu");
 	}
 	
-	/*
+	/**
 	 * Prints a goodbye message
 	 */
 	static void printGoodBye() {
-		System.out.println("Goodbye! Thank you for playing");
+		System.out.println("Goodbye! Come back soon");
 	}
 	
-	/*
+	/**
 	 * Gets the next valid integer from user input
+	 * 
+	 * @return int 0 if invalid, or choice if valid
 	 */
-	public static int getIntInput(Scanner s) {
-		// if the entry is not an integer
-		while (! s.hasNextInt()) {
-			// notify the user and flush the scanner
-			System.out.println("Please enter a digit");
-			s = new Scanner(System.in);
+	public static int getIntInput(Scanner in) {
+		int input = 0;
+		try {
+			input = in.nextInt();
+		} catch (Exception e) {
+			input = 0;
+			if (in.hasNext()) in.next();
+			if (in.hasNextLine()) in.nextLine();
 		}
-		// if it is an integer, return that integer
-		return s.nextInt();
+		return input;
 	}
 
-	/*
+	/**
 	 * Main method for the casino program
 	 * TODO: separate into more methods
 	 * 
 	 * @return <i>None</i>
 	 */
 	public static void main(String[] args) {
-		
-		Scanner in = new Scanner(System.in);
 		
 		// initialize state
 		boolean isPlaying = true;
@@ -83,6 +86,7 @@ public class MainMenu {
 		
 		printWelcomeMessage();
 		
+		Scanner in = new Scanner(System.in);
 		
 		while (isPlaying) {
 			
@@ -126,13 +130,17 @@ public class MainMenu {
 				
 				switch (input) {
 				case 1:
-					// TODO: trigger slots module
+					Slots s = new Slots();
+					s.initiate(in);
+					input = 0;
 					break;
 				case 2:
 					// TODO: trigger war module
 					break;
 				case 3:
-					// TODO: trigger blackjack module
+					Blackjack b = new Blackjack(50);
+					b.setup(in);
+					input = 0;
 					break;
 				case 4:
 					// go back to main menu
@@ -140,6 +148,7 @@ public class MainMenu {
 					break;
 				default:
 					printSelectionWarning();
+					input = 0;
 					break;
 				}
 				break;

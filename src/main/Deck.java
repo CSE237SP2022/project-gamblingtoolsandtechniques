@@ -100,6 +100,11 @@ public class Deck {
 		}
 	}
 	
+	// remove all cards
+	public void clear() {
+		cards.clear();
+	}
+	
 	// return a string representing the deck
 	// TODO: memory optimization?
 	public String toString() {
@@ -116,6 +121,14 @@ public class Deck {
 		
 		return out;
 		
+	}
+	
+	public String listCards() {
+		String out = "";
+		for (Card c : cards) {
+			out += c.toString() + " ";
+		}
+		return out;
 	}
 
 }

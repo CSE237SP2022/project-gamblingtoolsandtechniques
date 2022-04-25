@@ -8,9 +8,7 @@ public class War {
 
 	private Deck humanCards;
 	private Deck cpuCards;
-	
-	// TODO: format output better
-	// TODO: error catching when decks are empty
+	private Deck warDeck;
 
 	/**
 	 * Returns new War object
@@ -20,7 +18,8 @@ public class War {
 	public War(int numDecks) {
 		initializeDecks();
 		Deck d = new Deck(numDecks);
-		// TODO: less-janky means of dealing cards? Might have to update the Deck class
+		
+		// deal cards to players
 		boolean turn = false;
 		while (d.getSize() > 0) {
 			if (turn) humanCards.add(d.deal());
@@ -29,26 +28,81 @@ public class War {
 		}
 	}
 
+	/**
+	 * Overloaded constructor to create War object with default 1 deck
+	 */
 	public War() {
 		this(1);
 	}
 
-	private void play(Scanner scan) {
+	/**
+	 * Main handler for a game of war
+	 * 
+	 * @param scan a Scanner object passed from the main method of the casino program
+	 */
+	public void play(Scanner scan) {
+		// introduction
 		printWelcome();
 		boolean resume = handleInput(scan);
 		printTable();
+		
+		// all game functionality
 		while (resume) {
 			flipAndCompare(scan);
+			if (endGame()) break;
 			resume = handleInput(scan);
 		}
 	}
+	
+	/**
+	 * Detects empty decks among players
+	 * 
+	 * @return boolean indicating whether game is over
+	 */
+	private boolean endGame() {
+		if (humanCards.getSize() < 1) {
+			cpuWins();
+			return true;
+		}
+		else if (cpuCards.getSize() < 1) {
+			humanWins();
+			return true;
+		}
+		return false;
+	}
+	
+	private void humanWins() {
+		String msg = "You win! Though you did just play a full game of war, so....";
+		System.out.println(msg);
+	}
+	
+	private void cpuWins() {
+		String msg = "You lost, dude...";
+		System.out.println(msg);
+	}
 
-	private int flipAndCompare(Scanner scan) {
+	/**
+	 * Pulls top card from each player's deck and passes to the comparator
+	 * 
+	 * @param scan
+	 */
+	public void flipAndCompare(Scanner scan) {
 		Card humanRoundCard = humanCards.deal();
 		Card cpuRoundCard = cpuCards.deal();
 		printRoundState(humanRoundCard, cpuRoundCard);
-		int roundState = humanRoundCard.compareTo(cpuRoundCard);
-		switch (roundState) {
+		handleRoundResult(humanRoundCard, cpuRoundCard, scan);
+	}
+	
+	/**
+	 * Compares round cards
+	 * 
+	 * @param humanRoundCard
+	 * @param cpuRoundCard
+	 * @param scan
+	 */
+	public int handleRoundResult(Card humanRoundCard, Card cpuRoundCard, Scanner scan) {
+		int winner = humanRoundCard.compareTo(cpuRoundCard);
+		switch (winner) {
 		case -1:
 			handleRoundLoss(humanRoundCard, cpuRoundCard);
 			break;
@@ -59,41 +113,89 @@ public class War {
 			handleRoundWin(humanRoundCard, cpuRoundCard);
 			break;
 		}
-		return roundState;
+		return winner;
 	}
 
-	private void handleRoundWin(Card human, Card cpu) {
+	/**
+	 * In the event of a win
+	 * 
+	 * @param human Card
+	 * @param cpu Card
+	 */
+	public void handleRoundWin(Card human, Card cpu) {
+		// add winnings to human deck
 		humanCards.add(human, cpu);
-		// TODO: re-add discard pile?
 		humanCards.shuffle();
-		System.out.println("Win!");
+		String msg = "Win!  ";
+		System.out.println(msg + "You: " + humanCards.getSize() + "  CPU: " + cpuCards.getSize());
+		// if there was a war preceding this win, handle appropriately
+		handleSpoilsOfWar(true);
 	}
 
-	private void handleRoundLoss(Card human, Card cpu) {
+	/**
+	 * In the event of a loss
+	 * 
+	 * @param human
+	 * @param cpu
+	 */
+	public void handleRoundLoss(Card human, Card cpu) {
+		// add winnings to cpu deck
 		cpuCards.add(human, cpu);
 		cpuCards.shuffle();
-		System.out.println("Loss :(");
+		String msg = "Loss :(  ";
+		System.out.println(msg + "You: " + humanCards.getSize() + "  CPU: " + cpuCards.getSize());
+		// if there was a war preceding this loss, handle appropriately
+		handleSpoilsOfWar(false);
 	}
 
-	private void handleRoundWar(Card human, Card cpu, Scanner scan) {
+	/**
+	 * In the event of a tie
+	 * 
+	 * @param human
+	 * @param cpu
+	 * @param scan
+	 */
+	public void handleRoundWar(Card human, Card cpu, Scanner scan) {
 		System.out.print("It's a war!");
 		boolean resume = handleInput(scan);
 		int cardNumber = 0;
-		List<Card> cardQueue = new ArrayList<Card>();
+		// deal three cards face down on user input
 		while (resume && cardNumber < 3) {
-			cardQueue.addAll(flipWithoutComparing());
+			// add face-down cards to the war queue, to be distributed on termination of war
+			warDeck.add(flipWithoutComparing());
 			cardNumber++;
 			resume = handleInput(scan);
 		}
-		resume = handleInput(scan);
-		int winState = flipAndCompare(scan);
-		
 	}
 	
-	private List<Card> flipWithoutComparing() {
+	/**
+	 * In the event a war (or chain of wars) end(s)
+	 * 
+	 * @param didWin
+	 */
+	private void handleSpoilsOfWar(boolean didWin) {
+		// this is called every time there's a win or loss, so we make sure that the war queue does have cards in it
+		if (warDeck.getSize() > 0) {
+			// "turn cards over"
+			String msg = didWin ? "You got: " : "CPU got: ";
+			System.out.println(msg + warDeck.listCards());
+			// add war queue to winner's deck
+			while (warDeck.getSize() > 0) {
+				if (didWin) humanCards.add(warDeck.deal());
+				else cpuCards.add(warDeck.deal());
+			}
+		}
+	}
+	
+	/**
+	 * Deals cards without displaying or comparing; used in war
+	 * @return
+	 */
+	public List<Card> flipWithoutComparing() {
 		Card humanCard = humanCards.deal();
 		Card cpuCard = cpuCards.deal();
-		printRoundState(humanCard, cpuCard);
+		// show "face-down" cards
+		printRoundState();
 		List<Card> out = new ArrayList<Card>();
 		out.add(cpuCard);
 		out.add(humanCard);
@@ -118,6 +220,7 @@ public class War {
 	private void initializeDecks() {
 		humanCards = new Deck(0);
 		cpuCards = new Deck(0);
+		warDeck = new Deck(0);
 	}
 
 	private static void printWelcome() {
@@ -126,9 +229,16 @@ public class War {
 		System.out.println(msg);
 	}
 
-	private static void printRoundState(Card humanCard, Card cpuCard) {
+	private void printRoundState(Card humanCard, Card cpuCard) {
 		String msg = humanCard.toString() + "        " + cpuCard.toString() + "   ";
-		System.out.print(msg);
+		System.out.println(msg);
+	}
+	
+	/**
+	 * Overloaded version of `printRoundState()` used to display face-down cards
+	 */
+	private static void printRoundState() {
+		System.out.print("*         *    ");
 	}
 	
 	private void printTable() {
@@ -148,6 +258,14 @@ public class War {
 		War w = new War();
 		w.play(s);
 		s.close();
+	}
+	
+	public int getHumanDeckSize() {
+		return humanCards.getSize();
+	}
+	
+	public int getCpuDeckSize() {
+		return cpuCards.getSize();
 	}
 
 }

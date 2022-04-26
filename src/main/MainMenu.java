@@ -135,7 +135,8 @@ public class MainMenu {
 					input = 0;
 					break;
 				case 2:
-					// TODO: trigger war module
+					War w = new War();
+					w.play(in);
 					break;
 				case 3:
 					Blackjack b = new Blackjack(50);

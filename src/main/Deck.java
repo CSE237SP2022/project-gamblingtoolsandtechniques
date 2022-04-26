@@ -80,6 +80,12 @@ public class Deck {
 		cards.push(c);
 	}
 	
+	// add two cards to the deck (useful for War)
+	public void add(Card c, Card d) {
+		cards.push(c);
+		cards.push(d);
+	}
+	
 	// add many cards to the deck from a stack
 	public void add(Stack<Card> stack) {
 		while (!stack.isEmpty()) {
@@ -92,6 +98,11 @@ public class Deck {
 		for (Card c : list) {
 			cards.push(c);
 		}
+	}
+	
+	// remove all cards
+	public void clear() {
+		cards.clear();
 	}
 	
 	// return a string representing the deck
@@ -110,6 +121,14 @@ public class Deck {
 		
 		return out;
 		
+	}
+	
+	public String listCards() {
+		String out = "";
+		for (Card c : cards) {
+			out += c.toString() + " ";
+		}
+		return out;
 	}
 
 }

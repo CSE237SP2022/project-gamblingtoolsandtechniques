@@ -84,7 +84,7 @@ public class Blackjack {
 	    return input2;
 	}
 	
-	private void setup(Scanner scan) {
+	public void setup(Scanner scan) {
 		String input = "y";
 		System.out.println("Would you like to play blackjack? (y/n)");
 		input = scan.nextLine();

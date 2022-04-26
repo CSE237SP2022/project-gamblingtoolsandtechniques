@@ -69,7 +69,6 @@ User stories to complete for next iteration:
 User stories completed: 
 - The user is able to play blackjack.
 - The user is able to place wagers on all 3 games they are playing. 
-- The user is able to 
 
 We decided not to have the user buy credits from the main menu or within games becasue it did not add any value to the user experience of the casino. In reality, most people enter a casino with an predetermined amount of money they are willing to wager that night. Hopefully, they quit playing when they have won more credits than they lost, but if we're being honest here, most people stop playing when the lose all of their money. By beginning each game with a set amount of credits mirrors this experience many people have at a normal casino. 
 

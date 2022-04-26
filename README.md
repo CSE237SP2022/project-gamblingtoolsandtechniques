@@ -31,10 +31,11 @@ git clone https://github.com/freret/casino-237.git
 5. Hmu if you have questions!
 
 
-## Usage (for actual users when the time comes)
-1. Run MainMenu.sh in the command line: ./MainMenu.sh
-2. Type "y" when you are ready to being playing.
-3. Select a game...
+## Usage
+1. Navigate to the gamblingtoolsandtechniques directory: cd project-gamblingtoolsandtechniques
+2. Run MainMenu.sh in the command line: ./MainMenu.sh
+3. Type "y" when you are ready to being playing.
+4. Select a game by typing 1, 2, 3 or 4. 
 
 ## Questions for Iteration 1
 
@@ -63,3 +64,15 @@ User stories to complete for next iteration:
 - The user should be able to buy credits from the main menu.
 - The user should be able to buy credits from within the game.
 - The user should have a clear description of how to play.
+
+## Questions for Iteration 3
+User stories completed: 
+- The user is able to play blackjack.
+- The user is able to place wagers on all 3 games they are playing. 
+- The user is able to 
+
+We decided not to have the user buy credits from the main menu or within games becasue it did not add any value to the user experience of the casino. In reality, most people enter a casino with an predetermined amount of money they are willing to wager that night. Hopefully, they quit playing when they have won more credits than they lost, but if we're being honest here, most people stop playing when the lose all of their money. By beginning each game with a set amount of credits mirrors this experience many people have at a normal casino. 
+
+In summary, our casino features 3 different games - Slots, War, and Blackjack - for a holistic that will excite any user. We began by developing a MainMenu script that welcomes the user and compiles and run the Java classes for each game. To begin developing code for each game, we created tests to test the funcitonality of our future code. These tests consisted of checking the values of instance variables throughout each game such as the number of rounds played, credits after playing, win state of a round, and if a user has enough credits to continue playing in Blackjack. Beyond the Java classes we have for each game, there is a Card object and a Deck object that are used in War to simplify our code. 
+
+In each iteration of our project, we further implement clean code rules to make our code more intuitive and understandable for non-developers. We create more methods to partition the functionality of our code and extend the breadth of our tests so all of the cases for outcomes of our games are addressed. The user experience also improves by being able to move between games and play more games. 

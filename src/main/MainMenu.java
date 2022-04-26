@@ -1,10 +1,13 @@
 package main;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
+	
+	// initialize state
+	private static boolean isPlaying = true;
+	private static int menuState = 1;
+	private static int input = 0;
 	
 	/**
 	 * Prints a welcome message. Should be triggered when user opens casino
@@ -69,6 +72,78 @@ public class MainMenu {
 		}
 		return input;
 	}
+	
+	/**
+	 * Handles functionality for the main casino menu
+	 * @param scan
+	 */
+	private static void mainMenu(Scanner scan) {
+		// show menu options
+		printMenuOptions();
+		// wait for input
+		input = getIntInput(scan);
+		switch (input) {
+		case 1:
+			// go to game menu
+			menuState = 2;
+			break;
+		case 2:
+			// exit the program
+			isPlaying = false;
+			break;
+		default:
+			printSelectionWarning();
+			break;
+		}
+	}
+	
+	/**
+	 * Handles functionality for the game menu
+	 * @param scan
+	 */
+	private static void gameMenu(Scanner scan) {
+		// show game options
+		printGameOptions();
+		// wait for input
+		input = getIntInput(scan);
+		switch (input) {
+		case 1:
+			triggerSlots(scan);
+			break;
+		case 2:
+			triggerWar(scan);
+			break;
+		case 3:
+			triggerBlackjack(scan);
+			break;
+		case 4:
+			// go back to main menu
+			menuState = 1;
+			break;
+		default:
+			printSelectionWarning();
+			input = 0;
+			break;
+		}
+	}
+	
+	private static void triggerSlots(Scanner scan) {
+		Slots s = new Slots();
+		s.initiate(scan);
+		input = 0;
+	}
+	
+	private static void triggerWar(Scanner scan) {
+		War w = new War();
+		w.play(scan);
+		input = 0;
+	}
+	
+	private static void triggerBlackjack(Scanner scan) {
+		Blackjack b = new Blackjack(50);
+		b.setup(scan);
+		input = 0;
+	}
 
 	/**
 	 * Main method for the casino program
@@ -77,85 +152,22 @@ public class MainMenu {
 	 * @return <i>None</i>
 	 */
 	public static void main(String[] args) {
-		
-		// initialize state
-		boolean isPlaying = true;
-		int menuState = 1;
-		int input = 0;
-		
 		printWelcomeMessage();
-		
 		Scanner in = new Scanner(System.in);
-		
 		while (isPlaying) {
-			
 			switch (menuState) {
-			
 			// if user is on the main menu...
 			case 1:
-				
-				// show menu options
-				printMenuOptions();
-				
-				// wait for input
-				input = getIntInput(in);
-				
-				switch (input) {
-				case 1:
-					// go to game menu
-					menuState = 2;
-					break;
-				case 2:
-					// exit the program
-					isPlaying = false;
-					break;
-				default:
-					printSelectionWarning();
-					break;
-				}
+				mainMenu(in);
 				break;
-				
 			// if user is on the game menu
 			case 2:
-				
-				// show game options
-				printGameOptions();
-				
-				// wait for input
-				input = getIntInput(in);
-				
-				switch (input) {
-				case 1:
-					Slots s = new Slots();
-					s.initiate(in);
-					input = 0;
-					break;
-				case 2:
-					War w = new War();
-					w.play(in);
-					break;
-				case 3:
-					Blackjack b = new Blackjack(50);
-					b.setup(in);
-					input = 0;
-					break;
-				case 4:
-					// go back to main menu
-					menuState = 1;
-					break;
-				default:
-					printSelectionWarning();
-					input = 0;
-					break;
-				}
+				gameMenu(in);
 				break;
 			}
 		}
-		
 		printGoodBye();
-		
 		in.close();
-		
 	}
 
 }

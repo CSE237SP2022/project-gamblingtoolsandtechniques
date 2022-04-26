@@ -225,7 +225,7 @@ public class War {
 
 	private static void printWelcome() {
 		String msg = "This is a simple one--just press Enter when you want to flip your card\n";
-		msg += "Are you ready? (Press Enter, or any other keuy to quit)";
+		msg += "Are you ready? (Press Enter, or any other key to quit)";
 		System.out.println(msg);
 	}
 

@@ -22,8 +22,7 @@ public class MainMenu {
 	 */
 	static void printMenuOptions() {
 		System.out.println("1 - Play a game");
-		System.out.println("2 - Buy chips");
-		System.out.println("3 - Exit");
+		System.out.println("2 - Exit");
 	}
 	
 	/**
@@ -107,9 +106,6 @@ public class MainMenu {
 					menuState = 2;
 					break;
 				case 2:
-					// TODO: trigger chips purchase module here
-					break;
-				case 3:
 					// exit the program
 					isPlaying = false;
 					break;

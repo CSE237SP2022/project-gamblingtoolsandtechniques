@@ -52,14 +52,6 @@ public class Blackjack {
 		return this.playerTotal;
 	}
 	
-	public void setDealerTotal(int dealerTotal) {
-		this.dealerTotal = dealerTotal;
-	}
-	
-	public void setPlayerTotal(int playerTotal) {
-		this.playerTotal = playerTotal;
-	}
-	
 	public int getWager() {
 		return this.wager;
 	}
@@ -71,11 +63,23 @@ public class Blackjack {
 	public int getWinState() {
 		return this.winState;
 	}
+	
+	public void setDealerTotal(int dealerTotal) {
+		this.dealerTotal = dealerTotal;
+	}
+	
+	public void setPlayerTotal(int playerTotal) {
+		this.playerTotal = playerTotal;
+	}
+	
+	public void setCard(int card) {
+		this.card = card;
+	}
 
 	private String setupHelper(Scanner scan) {
 		String input2 = "";
 		System.out.println("Rounds: " + getRounds() + " Wins: " + getWins() + " Credits: " + getCredits());
-		this.play(scan);
+		this.playCaller(scan);
 		System.out.println("Would you like to play another round of blackjack? (y/n)");
 	    input2 = scan.nextLine();
 	    if(!input2.equals("y")) {
@@ -94,18 +98,18 @@ public class Blackjack {
 	    System.out.println("End of game");
 	}
 	
-	private void winProtocol() {
+	public void winProtocol() {
 		this.credits += this.wager;
 		this.wins++;
 		System.out.println("You win! You double your wager.\n");
 	}
 	
-	private void loseProtocol() {
+	public void loseProtocol() {
 		this.credits -= this.wager;
 		System.out.println("You bust. You lose your wager.\n");
 	}
 	
-	private void playHelper(int winState) {
+	public void playCallerHelper(int winState) {
 		if(winState == 1) {
 			this.winProtocol();
 		}
@@ -118,21 +122,21 @@ public class Blackjack {
 		System.out.println("You now have " + this.getCredits() + " credits.");
 	}
 	
-	public void play(Scanner scan) {
+	public void playCaller(Scanner scan) {
 		this.wager = this.setWager(scan);
 		if(this.hasEnoughCredits(this.wager)) {
 			this.rounds++;
-			this.playHelper(this.round(scan));
+			this.playCallerHelper(this.round(scan));
 		}
 		else {
 			System.out.println("You can't wager more than you have.");
-			this.play(scan);
+			this.playCaller(scan);
 		}
 	}
 	
 	private int setWager(Scanner scan) {
 		int wager = -1;
-		System.out.println("How much would you like to wager this round?");
+		System.out.println("How much would you like to wager this round? (int)");
 		while(wager < 0) {
 			try{
 				wager = scan.nextInt();
@@ -147,7 +151,7 @@ public class Blackjack {
 		return wager;
 	}
 
-	private void roundWinState() {
+	public void roundWinState() {
 		if((playerTotal > dealerTotal && playerTotal <= 21) || (playerTotal <= 21 && dealerTotal > 21)) {
     		this.winState = 1;
     	}
@@ -156,14 +160,14 @@ public class Blackjack {
     	}
 	}
 	
-	private void playDealer() {
+	public void playDealer() {
 		while(this.dealerTotal < 17) {
     		System.out.println("The dealer has " + this.dealerTotal + " and needs to hit.");
     		this.addDealerCard();
     	}
 	}
 	
-	private boolean gamePlayHelper(Scanner scan, String choice) {
+	public boolean gamePlayHelper(String choice) {
 		if(choice.equals("y")) {
 	    	this.addPlayerCard();
 	    	return false;
@@ -176,7 +180,7 @@ public class Blackjack {
 	    }
 	}
 	
-	private boolean gamePlay(Scanner scan) {
+	public boolean gamePlay(Scanner scan) {
 		if(playerTotal > 21) {
 			this.winState = 2;
 			return true;
@@ -184,7 +188,7 @@ public class Blackjack {
 		else {
 			System.out.println("\nThe dealer is showing " + this.dealerShow + ". Would you like to hit? (y/n)");
 			String choice = scan.nextLine();
-			return gamePlayHelper(scan, choice);
+			return gamePlayHelper(choice);
 		}
 	}
 	
@@ -199,7 +203,7 @@ public class Blackjack {
 		return winState;
 	}
 
-	private void roundSetup() {
+	public void roundSetup() {
 		this.playerTotal = 0;
 		this.dealerTotal = 0;
 		this.dealerShow = 0;
@@ -210,7 +214,7 @@ public class Blackjack {
 		this.addPlayerCard();
 	}
 	
-	private void aceChange(int total) {
+	public void aceChange(int total) {
 		if(total + 11 > 21) {
 			this.card = 1;
 		}
@@ -219,7 +223,7 @@ public class Blackjack {
 		}
 	}
 	
-	private String cardNamer(int total) {
+	public String cardNamer(int total) {
 		String cardName = "" + card;
 		if(this.card == 10) {
 			cardName = "face";

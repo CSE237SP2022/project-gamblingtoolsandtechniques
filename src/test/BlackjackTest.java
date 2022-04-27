@@ -44,7 +44,6 @@ class BlackjackTest {
 		Scanner scan = new Scanner("10\n\n\n\n\n\n\n\n");
 		Blackjack blackjack = new Blackjack(50);
 		blackjack.setup(scan);
-		//assertEquals(); //test scans
 	}
 	
 	@Test
@@ -52,7 +51,6 @@ class BlackjackTest {
 		Scanner scan = new Scanner("10\n\n\n\n\n\n\n\n");
 		Blackjack blackjack = new Blackjack(50);
 		blackjack.setup(scan);
-		//assertEquals(); //test scans
 	}
 	
 	@Test

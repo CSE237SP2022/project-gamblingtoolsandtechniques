@@ -1,6 +1,5 @@
 package main;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.lang.Math;
 

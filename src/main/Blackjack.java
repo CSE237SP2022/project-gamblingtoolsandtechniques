@@ -84,7 +84,7 @@ public class Blackjack {
 	    return input2;
 	}
 	
-	private void setup(Scanner scan) {
+	public void setup(Scanner scan) {
 		String input = "y";
 		System.out.println("Would you like to play blackjack? (y/n)");
 		input = scan.nextLine();
@@ -118,7 +118,7 @@ public class Blackjack {
 		System.out.println("You now have " + this.getCredits() + " credits.");
 	}
 	
-	private void play(Scanner scan) {
+	public void play(Scanner scan) {
 		this.wager = this.setWager(scan);
 		if(this.hasEnoughCredits(this.wager)) {
 			this.rounds++;
@@ -188,7 +188,7 @@ public class Blackjack {
 		}
 	}
 	
-	private int round(Scanner scan) {
+	public int round(Scanner scan) {
 		boolean gameOver = false;
 		this.winState = 0;
 		this.roundSetup();
@@ -231,7 +231,7 @@ public class Blackjack {
 		return cardName;
 	}
 	
-	private void addDealerCard() {
+	public void addDealerCard() {
 		this.card = (int)(Math.random()*11) + 1;
 		String cardName = this.cardNamer(this.getDealerTotal());
 		if(this.getDealerTotal() == 0) {
@@ -244,14 +244,14 @@ public class Blackjack {
 		this.dealerTotal += card;
 	}
 	
-	private void addPlayerCard() {
+	public void addPlayerCard() {
 		this.card = (int)(Math.random()*11) + 1;
 		String cardName = this.cardNamer(this.getPlayerTotal());
 		this.playerTotal += card;
 		System.out.println("You receive a " + cardName + " card and have a total of " + this.getPlayerTotal() + ".");
 	}
 	
-	private boolean hasEnoughCredits(int wager) {
+	public boolean hasEnoughCredits(int wager) {
 		return (this.credits >= wager);
 	}
 	

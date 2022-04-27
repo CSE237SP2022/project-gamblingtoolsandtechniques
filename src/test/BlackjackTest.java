@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Scanner;
+
 import org.junit.jupiter.api.Test;
 
 import main.Blackjack;
@@ -50,16 +52,18 @@ class BlackjackTest {
 	
 	@Test
 	void testSetup() {
+		Scanner scan = new Scanner(System.in);
 		Blackjack blackjack = new Blackjack(50);
-		blackjack.setup();
+		blackjack.setup(scan);
 		//assertEquals();
 	}
 	
 	@Test
 	void testPlayRounds() {
 		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		for (int i = 0; i < 10; i++) {
-			blackjack.play();
+			blackjack.play(scan);
 		}
 		int numRounds = 10;
 		int rounds = blackjack.getRounds();
@@ -69,10 +73,11 @@ class BlackjackTest {
 	@Test
 	void testCreditsAfterPlay() {
 		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		int mult = 0;
 		int creditsAfter = 0;
 		for (int i = 0; i < 10; i++) {
-			int result = blackjack.round();
+			int result = blackjack.round(scan);
 			if (result == 1) {
 				mult = 1;
 			} else if (result == 2) {
@@ -87,46 +92,51 @@ class BlackjackTest {
 	
 	@Test
 	void testWinState1A() {
-		Blackjack blackjack = new Blackjack(50);		
+		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		blackjack.setPlayerTotal(21);
 		blackjack.setDealerTotal(3);
-		int winState = blackjack.round();
+		int winState = blackjack.round(scan);
 		assertEquals(winState, 1);
 	}
 	
 	@Test
 	void testWinState1B() {
-		Blackjack blackjack = new Blackjack(50);		
+		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		blackjack.setPlayerTotal(17);
 		blackjack.setDealerTotal(25);
-		int winState = blackjack.round();
+		int winState = blackjack.round(scan);
 		assertEquals(winState, 1);
 	}
 	
 	@Test
 	void testWinState2A() {
-		Blackjack blackjack = new Blackjack(50);		
+		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		blackjack.setPlayerTotal(24);
 		blackjack.setDealerTotal(4);
-		int winState = blackjack.round();
+		int winState = blackjack.round(scan);
 		assertEquals(winState, 2);
 	}
 	
 	@Test
 	void testWinState2B() {
-		Blackjack blackjack = new Blackjack(50);		
+		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		blackjack.setPlayerTotal(14);
 		blackjack.setDealerTotal(16);
-		int winState = blackjack.round();
+		int winState = blackjack.round(scan);
 		assertEquals(winState, 2);
 	}
 	
 	@Test
 	void testWinState2C() {
-		Blackjack blackjack = new Blackjack(50);		
+		Blackjack blackjack = new Blackjack(50);
+		Scanner scan = new Scanner(System.in);
 		blackjack.setPlayerTotal(17);
 		blackjack.setDealerTotal(17);
-		int winState = blackjack.round();
+		int winState = blackjack.round(scan);
 		assertEquals(winState, 0);
 	}
 	

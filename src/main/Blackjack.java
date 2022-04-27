@@ -90,8 +90,6 @@ public class Blackjack {
 	
 	public void setup(Scanner scan) {
 		String input = "y";
-		System.out.println("Would you like to play blackjack? (y/n)");
-		input = scan.nextLine();
 		while (input.equals("y")) {
 			input = this.setupHelper(scan);
 		}
@@ -134,19 +132,24 @@ public class Blackjack {
 		}
 	}
 	
+	public static int getIntInput(Scanner in) {
+		int input = 0;
+		try {
+			input = in.nextInt();
+		} catch (Exception e) {
+			input = 0;
+			if (in.hasNext()) in.next();
+			if (in.hasNextLine()) in.nextLine();
+		}
+		return input;
+	}
+	
 	private int setWager(Scanner scan) {
-		int wager = -1;
 		System.out.println("How much would you like to wager this round? (int)");
-		while(wager < 0) {
-			try{
-				wager = scan.nextInt();
-			}
-			catch(InputMismatchException e) {
-				wager = -1;
-			}
-			if(wager < 0) {
-				System.out.println("Please enter a positive integer.");
-			}
+		int wager = getIntInput(scan);
+		while (wager == 0) {
+			System.out.println("Please enter a positive integer.");
+			wager = getIntInput(scan);
 		}
 		return wager;
 	}

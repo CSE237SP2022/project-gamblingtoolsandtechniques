@@ -9,6 +9,7 @@ public class War {
 	private Deck humanCards;
 	private Deck cpuCards;
 	private Deck warDeck;
+	private boolean resume;
 
 	/**
 	 * Returns new War object
@@ -43,15 +44,16 @@ public class War {
 	public void play(Scanner scan) {
 		// introduction
 		printWelcome();
-		boolean resume = handleInput(scan);
-		printTable();
+		resume = handleInput(scan);
+		if (resume) printTable();
 		
 		// all game functionality
 		while (resume) {
-			flipAndCompare(scan);
 			if (endGame()) break;
+			flipAndCompare(scan);
 			resume = handleInput(scan);
 		}
+		System.out.println(goodbyeMessage());
 	}
 	
 	/**
@@ -59,7 +61,7 @@ public class War {
 	 * 
 	 * @return boolean indicating whether game is over
 	 */
-	private boolean endGame() {
+	public boolean endGame() {
 		if (humanCards.getSize() < 1) {
 			cpuWins();
 			return true;
@@ -157,7 +159,7 @@ public class War {
 	 */
 	public void handleRoundWar(Card human, Card cpu, Scanner scan) {
 		System.out.print("It's a war!");
-		boolean resume = handleInput(scan);
+		resume = handleInput(scan);
 		int cardNumber = 0;
 		// deal three cards face down on user input
 		while (resume && cardNumber < 3) {
@@ -173,7 +175,7 @@ public class War {
 	 * 
 	 * @param didWin
 	 */
-	private void handleSpoilsOfWar(boolean didWin) {
+	public void handleSpoilsOfWar(boolean didWin) {
 		// this is called every time there's a win or loss, so we make sure that the war queue does have cards in it
 		if (warDeck.getSize() > 0) {
 			// "turn cards over"
@@ -210,7 +212,7 @@ public class War {
 	 *             open on System.in
 	 * @return int 1 if continue, 0 if quit
 	 */
-	private static boolean handleInput(Scanner scan) {
+	public boolean handleInput(Scanner scan) {
 		String input = scan.nextLine();
 		if (input.isEmpty())
 			return true;
@@ -252,6 +254,11 @@ public class War {
 
 		return out;
 	}
+	
+	public static String goodbyeMessage() {
+		String msg = "Later!";
+		return msg;
+	}
 
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
@@ -266,6 +273,10 @@ public class War {
 	
 	public int getCpuDeckSize() {
 		return cpuCards.getSize();
+	}
+	
+	public int getWarDeckSize() {
+		return warDeck.getSize();
 	}
 
 }

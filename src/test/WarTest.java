@@ -1,3 +1,4 @@
+
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,15 +21,33 @@ class WarTest {
 	 * However, I did my best to make some methods public and return 
 	 * integers instead of void to increase test coverage
 	 */
+	
+	@Test
+	void testPlayQuit() {
+		War w = new War();
+		Scanner scan = new Scanner("q\n");
+		w.play(scan);
+	}
+	
+	@Test
+	void testPlayThenQuit() {
+		War w = new War();
+		Scanner scan = new Scanner("\n\n\nq\n");
+		w.play(scan);
+	}
+	
+	@Test
+	void testEndGame() {
+		War w = new War(0); // initialize with no cards so conditional in endGame is met
+		w.endGame();
+	}
 
 	@Test
 	void testFlipAndCompare() {
 		War w = new War();
-		w.flipAndCompare(new Scanner(System.in));
-		assertAll(
-				() -> assertEquals(27, w.getCpuDeckSize()),
-				() -> assertEquals(25, w.getHumanDeckSize())
-				);
+		w.flipAndCompare(new Scanner("\n\n\n\n\n\n"));
+		// tough to account for randomness; just check that either player won the round
+		assertTrue(27 == w.getCpuDeckSize() || 27 == w.getHumanDeckSize());
 	}
 	
 	@Test
@@ -53,10 +72,49 @@ class WarTest {
 	}
 	
 	@Test
+	void testHandleRoundWar() {
+		War w = new War();
+		Scanner scan = new Scanner("\n\n\n\nq\n");
+		w.handleRoundWar(new Card(1, 10), new Card(1, 10), scan);
+		assertEquals(6, w.getWarDeckSize());
+	}
+	
+	@Test
+	void testHandleSpoilsOfWar() {
+		War w = new War();
+		Scanner scan = new Scanner("\n\n\n\nq\n");
+		w.handleRoundWar(new Card(1, 10), new Card(1, 10), scan);
+		w.handleSpoilsOfWar(true);
+		assertEquals(29, w.getHumanDeckSize());
+	}
+	
+	@Test
 	void testFlipWithoutComparing() {
 		War w = new War();
 		List<Card> flipped = w.flipWithoutComparing();
 		assertInstanceOf(List.class, flipped);
+	}
+	
+	@Test
+	void testHandleInputResume() {
+		War w = new War();
+		Scanner scan = new Scanner("\n");
+		assertTrue(w.handleInput(scan));
+	}
+	
+	@Test
+	void testHandleInputQuit() {
+		War w = new War();
+		Scanner scan = new Scanner("q\n");
+		assertFalse(w.handleInput(scan));
+	}
+	
+	@Test
+	void testGetState() {
+		War w = new War(0);
+		String expected = "Your cards: Number of cards: 0\n\n";
+		expected += "Opponent cards: Number of cards: 0\n\n";
+		assertEquals(expected, w.getState());
 	}
 
 }
